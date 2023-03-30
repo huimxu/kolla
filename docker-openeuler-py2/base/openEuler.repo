@@ -1,0 +1,26 @@
+#generic-repos is licensed under the Mulan PSL v2.
+#You can use this software according to the terms and conditions of the Mulan PSL v2.
+#You may obtain a copy of Mulan PSL v2 at:
+#    http://license.coscl.org.cn/MulanPSL2
+#THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR
+#IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR
+#PURPOSE.
+#See the Mulan PSL v2 for more details.
+
+[OS]
+name=OS
+#baseurl=file:///run/media/root/9dccac03-5f9d-4062-a95d-a6ebb6c9f8a1/tmp-test/repo1/
+baseurl=http://192.168.100.117/tmp-repo
+#baseurl=file:///root/repo1/
+enabled=1
+gpgcheck=0
+gpgkey=0
+[PYTHON]
+name=PYTHON
+#baseurl=file:///run/media/root/9dccac03-5f9d-4062-a95d-a6ebb6c9f8a1/tmp-test/repo1/
+baseurl=http://192.168.100.117/python2
+#baseurl=file:///root/repo1/
+enabled=1
+gpgcheck=0
+gpgkey=0
+

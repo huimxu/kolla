@@ -19,14 +19,15 @@ from oslo_config import types
 from kolla.version import version_info as version
 
 
-BASE_OS_DISTRO = ['centos', 'rhel', 'ubuntu', 'oraclelinux', 'debian']
-BASE_ARCH = ['x86_64', 'ppc64le', 'aarch64']
+BASE_OS_DISTRO = ['centos', 'rhel', 'ubuntu', 'oraclelinux', 'debian', 'openeuler']
+BASE_ARCH = ['x86_64', 'ppc64le', 'aarch64', 'sw_64']
 DEFAULT_BASE_TAGS = {
     'centos': '7',
     'rhel': '7',
     'oraclelinux': '7-slim',
     'debian': 'stretch',
     'ubuntu': '16.04',
+    'openeuler': '22.03',
 }
 DISTRO_RELEASE = {
     'centos': '7',
@@ -34,6 +35,7 @@ DISTRO_RELEASE = {
     'oraclelinux': '7',
     'debian': 'stretch',
     'ubuntu': '16.04',
+    'openeuler': '22'
 }
 
 # This is noarch repository so we will use it on all architectures
@@ -46,7 +48,8 @@ DELOREAN = \
 DELOREAN_DEPS = {
     'x86_64': "https://trunk.rdoproject.org/centos7-pike/delorean-deps.repo",
     'aarch64': "",
-    'ppc64le': ""
+    'ppc64le': "",
+    'sw_64': ""
 }
 
 INSTALL_TYPE_CHOICES = ['binary', 'source', 'rdo', 'rhos']
@@ -109,6 +112,7 @@ _PROFILE_OPTS = [
                     'kuryr',
                     'magnum',
                     'manila',
+                    'masakari',
                     'mistral',
                     'monasca',
                     'murano',
@@ -351,90 +355,26 @@ SOURCES = {
         'type': 'url',
         'location': ('$tarballs_base/horizon/'
                      'horizon-12.0.4.tar.gz')},
-    'horizon-plugin-cloudkitty-dashboard': {
-        'type': 'url',
-        'location': ('$tarballs_base/cloudkitty-dashboard/'
-                     'cloudkitty-dashboard-6.0.1.tar.gz')},
-    'horizon-plugin-designate-dashboard': {
-        'type': 'url',
-        'location': ('$tarballs_base/designate-dashboard/'
-                     'designate-dashboard-5.0.2.tar.gz')},
-    'horizon-plugin-fwaas-dashboard': {
-        'type': 'url',
-        'location': ('$tarballs_base/neutron-fwaas-dashboard/'
-                     'neutron-fwaas-dashboard-1.0.1.tar.gz')},
-    'horizon-plugin-freezer-web-ui': {
-        'type': 'url',
-        'location': ('$tarballs_base/freezer-web-ui/'
-                     'freezer-web-ui-5.0.1.tar.gz')},
-    'horizon-plugin-ironic-ui': {
-        'type': 'url',
-        'location': ('$tarballs_base/ironic-ui/'
-                     'ironic-ui-3.0.4.tar.gz')},
-    'horizon-plugin-karbor-dashboard': {
-        'type': 'url',
-        'location': ('$tarballs_base/karbor-dashboard/'
-                     'karbor-dashboard-0.4.0.tar.gz')},
-    'horizon-plugin-magnum-ui': {
-        'type': 'url',
-        'location': ('$tarballs_base/magnum-ui/'
-                     'magnum-ui-3.0.1.tar.gz')},
-    'horizon-plugin-manila-ui': {
-        'type': 'url',
-        'location': ('$tarballs_base/manila-ui/'
-                     'manila-ui-2.10.3.tar.gz')},
-    'horizon-plugin-mistral-dashboard': {
-        'type': 'url',
-        'location': ('$tarballs_base/mistral-dashboard/'
-                     'mistral-dashboard-5.2.4.tar.gz')},
-    'horizon-plugin-monasca-ui': {
-        'type': 'url',
-        'location': ('$tarballs_base/monasca-ui/'
-                     'monasca-ui-1.8.1.tar.gz')},
-    'horizon-plugin-murano-dashboard': {
-        'type': 'url',
-        'location': ('$tarballs_base/murano-dashboard/'
-                     'murano-dashboard-4.0.1.tar.gz')},
-    'horizon-plugin-neutron-lbaas-dashboard': {
-        'type': 'url',
-        'location': ('$tarballs_base/neutron-lbaas-dashboard/'
-                     'neutron-lbaas-dashboard-3.0.3.tar.gz')},
-    'horizon-plugin-sahara-dashboard': {
-        'type': 'url',
-        'location': ('$tarballs_base/sahara-dashboard/'
-                     'sahara-dashboard-7.0.4.tar.gz')},
-    'horizon-plugin-searchlight-ui': {
-        'type': 'url',
-        'location': ('$tarballs_base/searchlight-ui/'
-                     'searchlight-ui-3.0.1.tar.gz')},
-    'horizon-plugin-senlin-dashboard': {
-        'type': 'url',
-        'location': ('$tarballs_base/senlin-dashboard/'
-                     'senlin-dashboard-0.7.1.tar.gz')},
-    'horizon-plugin-solum-dashboard': {
-        'type': 'url',
-        'location': ('$tarballs_base/solum-dashboard/'
-                     'solum-dashboard-2.2.1.tar.gz')},
-    'horizon-plugin-tacker-dashboard': {
-        'type': 'url',
-        'location': ('http://tarballs.openstack.org/tacker-horizon/'
-                     'tacker-horizon-0.10.0.tar.gz')},
-    'horizon-plugin-trove-dashboard': {
-        'type': 'url',
-        'location': ('$tarballs_base/trove-dashboard/'
-                     'trove-dashboard-9.0.1.tar.gz')},
     'horizon-plugin-watcher-dashboard': {
         'type': 'url',
         'location': ('$tarballs_base/watcher-dashboard/'
                      'watcher-dashboard-1.4.1.tar.gz')},
-    'horizon-plugin-zaqar-ui': {
+    'horizon-plugin-manila-ui': {
         'type': 'url',
-        'location': ('$tarballs_base/zaqar-ui/'
-                     'zaqar-ui-3.0.1.tar.gz')},
-    'horizon-plugin-zun-ui': {
+        'location': ('$tarballs_base/manila-ui/'
+                     'manila-ui-2.10.3.tar.gz')},
+    'horizon-plugin-ironic-ui': {
         'type': 'url',
-        'location': ('$tarballs_base/zun-ui/'
-                     'zun-ui-0.2.1.tar.gz')},
+        'location': ('$tarballs_base/ironic-ui/'
+                     'ironic-ui-3.0.4.tar.gz')},
+    'horizon-plugin-senlin-dashboard': {
+        'type': 'url',
+        'location': ('$tarballs_base/senlin-dashboard/'
+                     'senlin-dashboard-0.7.1.tar.gz')},
+    'horizon-plugin-masakari-dashboard': {
+        'type': 'url',
+        'location': ('$tarballs_base/masakari-dashboard/'
+                     'masakari-dashboard-1.0.1.tar.gz')},
     'ironic-base': {
         'type': 'url',
         'location': ('$tarballs_base/ironic/'
@@ -467,6 +407,14 @@ SOURCES = {
         'type': 'url',
         'location': ('$tarballs_base/manila/'
                      'manila-5.1.0.tar.gz')},
+    'masakari-base': {
+        'type': 'url',
+        'location': ('$tarballs_base/masakari/'
+                     'masakari-8.1.2.tar.gz')},
+    'masakari-monitors': {
+        'type': 'url',
+        'location': ('$tarballs_base/masakari-monitors/'
+                     'masakari-monitors-8.0.2.tar.gz')},
     'mistral-base': {
         'type': 'url',
         'location': ('$tarballs_base/mistral/'
@@ -503,82 +451,10 @@ SOURCES = {
         'type': 'url',
         'location': ('$tarballs_base/neutron/'
                      'neutron-11.0.8.tar.gz')},
-    'neutron-base-plugin-neutron-fwaas': {
-        'type': 'url',
-        'location': ('$tarballs_base/neutron-fwaas/'
-                     'neutron-fwaas-11.0.2.tar.gz')},
-    'neutron-base-plugin-networking-generic-switch': {
-        'type': 'url',
-        'location': ('$tarballs_base/networking-generic-switch/'
-                     'networking-generic-switch-0.4.0.tar.gz')},
-    'neutron-base-plugin-networking-sfc': {
-        'type': 'url',
-        'location': ('$tarballs_base/networking-sfc/'
-                     'networking-sfc-5.0.1.tar.gz')},
-    'neutron-base-plugin-vmware-nsx': {
-        'type': 'url',
-        'location': ('$tarballs_base/vmware-nsx/'
-                     'vmware-nsx-11.0.0.tar.gz')},
-    'neutron-bgp-dragent': {
-        'type': 'url',
-        'location': ('$tarballs_base/neutron-dynamic-routing/'
-                     'neutron-dynamic-routing-11.0.2.tar.gz')},
-    'neutron-lbaas-agent': {
-        'type': 'url',
-        'location': ('$tarballs_base/neutron-lbaas/'
-                     'neutron-lbaas-11.0.4.tar.gz')},
-    'neutron-server-opendaylight-plugin-networking-odl': {
-        'type': 'url',
-        'location': ('$tarballs_base/networking-odl/'
-                     'networking-odl-11.0.1.tar.gz')},
-    'neutron-server-opendaylight-plugin-networking-bgpvpn': {
-        'type': 'url',
-        'location': ('$tarballs_base/networking-bgpvpn/'
-                     'networking-bgpvpn-7.0.1.tar.gz')},
-    'neutron-server-opendaylight-plugin-networking-l2gw': {
-        'type': 'url',
-        'location': ('$tarballs_base/networking-l2gw/'
-                     'networking-l2gw-11.0.0.tar.gz')},
-    'neutron-server-opendaylight-plugin-networking-sfc': {
-        'type': 'url',
-        'location': ('$tarballs_base/networking-sfc/'
-                     'networking-sfc-5.0.1.tar.gz')},
-    'neutron-server-plugin-neutron-dynamic-routing': {
-        'type': 'url',
-        'location': ('$tarballs_base/neutron-dynamic-routing/'
-                     'neutron-dynamic-routing-11.0.2.tar.gz')},
-    'neutron-server-plugin-neutron-lbaas': {
-        'type': 'url',
-        'location': ('$tarballs_base/neutron-lbaas/'
-                     'neutron-lbaas-11.0.4.tar.gz')},
-    'neutron-server-plugin-vmware-nsxlib': {
-        'type': 'url',
-        'location': ('$tarballs_base/vmware-nsxlib/'
-                     'vmware-nsxlib-11.1.2.tar.gz')},
-    'neutron-server-plugin-vpnaas-agent': {
-        'type': 'url',
-        'location': ('$tarballs_base/neutron-vpnaas/'
-                     'neutron-vpnaas-11.0.0.tar.gz')},
-    'neutron-vpnaas-agent': {
-        'type': 'url',
-        'location': ('$tarballs_base/neutron-vpnaas/'
-                     'neutron-vpnaas-11.0.0.tar.gz')},
-    'neutron-server-ovn-plugin-networking-ovn': {
-        'type': 'url',
-        'location': ('$tarballs_base/networking-ovn/'
-                     'networking-ovn-3.0.2.tar.gz')},
     'nova-base': {
         'type': 'url',
         'location': ('$tarballs_base/nova/'
                      'nova-16.1.8.tar.gz')},
-    'nova-base-plugin-blazar': {
-        'type': 'url',
-        'location': ('$tarballs_base/blazar-nova/'
-                     'blazar-nova-0.3.0.tar.gz')},
-    'novajoin-base': {
-        'type': 'url',
-        'location': ('$tarballs_base/novajoin/'
-                     'novajoin-1.0.17.tar.gz')},
     'octavia-base': {
         'type': 'url',
         'location': ('$tarballs_base/octavia/'
@@ -954,6 +830,10 @@ USERS = {
     'hugetlbfs-user': {
         'uid': 42477,  # unused user, but we need the group for vhost socket
         'gid': 42477,
+    },
+    'masakari-user': {
+        'uid': 42485,
+        'gid': 42485,
     }
 }
 

@@ -1,0 +1,48 @@
+FROM {{ namespace }}/{{ image_prefix }}nova-base:{{ tag }}
+LABEL maintainer="{{ maintainer }}" name="{{ image_name }}" build-date="{{ build_date }}"
+
+{% block nova_conductor_header %}{% endblock %}
+
+{% import "macros.j2" as macros with context %}
+
+{% if install_type == 'binary' %}
+    {% if base_distro in ['centos', 'oraclelinux', 'rhel'] %}
+
+        {% set nova_conductor_packages = [
+            'openstack-nova-conductor'
+        ] %}
+
+    {% elif base_distro in ['debian', 'ubuntu'] %}
+
+        {% set nova_conductor_packages = [
+            'nova-conductor'
+        ] %}
+
+    {% endif %}
+
+{{ macros.install_packages(nova_conductor_packages | customizable("packages")) }}
+
+{% endif %}
+
+{% if base_arch == 'sw_64' and base_distro == 'openeuler' %}
+{% set nova_conductor_pip_packages = [
+    'rfc3986==1.2.0',
+    'kombu==4.6.6',
+    'oslo.middleware==3.31.0',
+    'oslo.utils==3.37.0',
+    'oslo.log==3.36.0',
+    'oslo.context==2.19.2',
+    'shade==1.16.0',
+    'python-ironicclient==1.17.2',
+    'six==1.11.0'
+] %}
+
+RUN {{ macros.install_pip(nova_conductor_pip_packages | customizable("pip_packages"), constraints=false) }}
+
+{% endif %}
+
+
+{% block nova_conductor_footer %}{% endblock %}
+{% block footer %}{% endblock %}
+
+USER nova
